@@ -1,111 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About Me - Jayden</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #ffffff);
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jayden Chhabra - Name Exploder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header {
-      background-color: #00838f;
-      color: white;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
+        .container {
+            text-align: center;
+            position: relative;
+        }
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 2rem;
-    }
+        .name-container {
+            position: relative;
+            margin: 50px 0;
+        }
 
-    img.profile {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      display: block;
-      margin: 1rem auto;
-      border: 5px solid #00838f;
-    }
+        .name {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
 
-    h2 {
-      border-bottom: 2px solid #00838f;
-      padding-bottom: 0.5rem;
-    }
+        .name:hover {
+            transform: scale(1.05);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        }
 
-    .contact {
-      margin-top: 2rem;
-      background: #f1f1f1;
-      padding: 1rem;
-      border-radius: 10px;
-    }
+        .explode-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin: 20px;
+        }
 
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1s ease-out forwards;
-    }
+        .explode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    }
+        .explode-btn:active {
+            transform: translateY(0);
+        }
 
-    a {
-      color: #00838f;
-      text-decoration: none;
-    }
+        .letter {
+            position: absolute;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+        }
 
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+        .exploded {
+            animation: explode 1.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #fff, #ff6b6b);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-explode 2s ease-out forwards;
+        }
+
+        @keyframes particle-explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+
+        .title {
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .reset-btn {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .reset-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff6b6b, 0 0 20px #ff6b6b;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff6b6b, 0 0 40px #ff6b6b;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1 class="title">Name Exploder</h1>
+        <div class="name-container">
+            <div class="name" id="name">Jayden Chhabra</div>
+        </div>
+        <button class="explode-btn" id="explodeBtn">💥 EXPLODE! 💥</button>
+        <button class="reset-btn" id="resetBtn">🔄 Reset</button>
+    </div>
 
-  <header>
-    <h1>Hi, I'm Jayden Chhabra</h1>
-    <p>Web Designer | Developer | Curious Mind</p>
-  </header>
+    <script>
+        const name = document.getElementById('name');
+        const explodeBtn = document.getElementById('explodeBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const nameContainer = document.querySelector('.name-container');
+        
+        let isExploded = false;
+        let letters = [];
 
-  <div class="container">
-    <img src="https://via.placeholder.com/150" alt="Jayden Chhabra" class="profile fade-in">
+        function createLetters() {
+            const nameText = 'Jayden Chhabra';
+            const nameWidth = name.offsetWidth;
+            const nameHeight = name.offsetHeight;
+            const nameRect = name.getBoundingClientRect();
+            const containerRect = nameContainer.getBoundingClientRect();
+            
+            letters = [];
+            
+            for (let i = 0; i < nameText.length; i++) {
+                if (nameText[i] === ' ') continue;
+                
+                const letter = document.createElement('div');
+                letter.className = 'letter';
+                letter.textContent = nameText[i];
+                letter.style.left = `${(i / nameText.length) * 100}%`;
+                letter.style.top = '0';
+                letter.style.transform = 'translateX(-50%)';
+                
+                nameContainer.appendChild(letter);
+                letters.push(letter);
+            }
+        }
 
-    <section class="fade-in">
-      <h2>About Me</h2>
-      <p>Hello! I'm Jayden, a creative and passionate tech enthusiast who loves building fun and functional websites. Whether it's coding, learning new frameworks, or solving design puzzles, I'm all about bringing ideas to life on the web.</p>
-    </section>
+        function explode() {
+            if (isExploded) return;
+            
+            isExploded = true;
+            name.style.display = 'none'; // Hide the original name completely
+            
+            // Add glow effect to button
+            explodeBtn.classList.add('glow');
+            
+            // Create explosion effect for each letter
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    const randomX = (Math.random() - 0.5) * 800;
+                    const randomY = (Math.random() - 0.5) * 600;
+                    const randomRotation = Math.random() * 720 - 360;
+                    
+                    letter.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRotation}deg)`;
+                    letter.classList.add('exploded');
+                    
+                    // Create particles around each letter
+                    createParticles(letter);
+                }, index * 100);
+            });
+            
+            // Show reset button
+            setTimeout(() => {
+                resetBtn.classList.add('show');
+            }, 1500);
+            
+            // Remove glow effect
+            setTimeout(() => {
+                explodeBtn.classList.remove('glow');
+            }, 2000);
+        }
 
-    <section class="fade-in">
-      <h2>Skills</h2>
-      <ul>
-        <li>HTML, CSS, JavaScript</li>
-        <li>React, TailwindCSS</li>
-        <li>Firebase, GitHub</li>
-        <li>Design Thinking & UI/UX</li>
-      </ul>
-    </section>
+        function createParticles(letter) {
+            const rect = letter.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const angle = (i / 8) * Math.PI * 2;
+                const distance = 50 + Math.random() * 100;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                particle.style.left = `${centerX}px`;
+                particle.style.top = `${centerY}px`;
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                
+                document.body.appendChild(particle);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    particle.remove();
+                }, 2000);
+            }
+        }
 
-    <section class="fade-in contact">
-      <h2>Contact Me</h2>
-      <p>Email: <a href="mailto:jayden@example.com">jayden@example.com</a></p>
-      <p>GitHub: <a href="https://github.com/">github.com/jayden</a></p>
-      <p>LinkedIn: <a href="https://linkedin.com/">linkedin.com/in/jayden</a></p>
-    </section>
-  </div>
+        function reset() {
+            isExploded = false;
+            name.style.display = 'block'; // Show the original name again
+            
+            // Remove all letters
+            letters.forEach(letter => {
+                letter.remove();
+            });
+            letters = [];
+            
+            // Hide reset button
+            resetBtn.classList.remove('show');
+            
+            // Don't recreate letters on reset - only create them when needed for explosion
+        }
 
+        // Event listeners
+        explodeBtn.addEventListener('click', explode);
+        resetBtn.addEventListener('click', reset);
+        
+        // Create letters only when explode button is clicked
+        explodeBtn.addEventListener('click', () => {
+            if (!isExploded) {
+                createLetters();
+            }
+        });
+        
+        // Add some interactive effects
+        name.addEventListener('mouseenter', () => {
+            if (!isExploded) {
+                name.style.transform = 'scale(1.1)';
+            }
+        });
+        
+        name.addEventListener('mouseleave', () => {
+            if (!isExploded) {
+                name.style.transform = 'scale(1)';
+            }
+        });
+    </script>
 </body>
-</html>
+</html> 
